@@ -1,4 +1,5 @@
-import { setUserName } from './cli.js'
+import FileManager from './app.js';
 
-const userName = setUserName();
-console.log(`Welcome to the File Manager, ${userName}!`);
+const app = new FileManager();
+
+app.start();
