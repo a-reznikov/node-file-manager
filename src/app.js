@@ -3,6 +3,7 @@ import { readdir } from 'node:fs/promises';
 import readline from 'node:readline';
 import os from 'os';
 import { setUserName } from './services/cli.js'
+import { readFile } from './services/read.js';
 
 export default class FileManager {
   constructor() {
@@ -33,6 +34,11 @@ export default class FileManager {
 
   cd(path) {
     this.currentPath = this.setPath(path);
+  }
+
+  async cat(path) {
+    const pathToFile = this.setPath(path);
+    await readFile(pathToFile);
   }
 
   async ls() {
