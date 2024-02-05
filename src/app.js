@@ -67,6 +67,12 @@ export default class FileManager {
     await deleteFile(pathToFile);
   }
 
+  async mv(path) {
+    await this.cp(path);
+    await this.rm(path);
+    this.message('move')
+  }
+
   async ls() {
     const listObject = await readdir(this.currentPath, { withFileTypes: true });
     const directories = listObject.filter((object) => !object.isFile()).sort((a, b) => a.name.localeCompare(b.name));
@@ -88,6 +94,9 @@ export default class FileManager {
         break;
       case 'path':
         console.log(`You are currently in ${this.currentPath}`);
+        break;
+      case 'move':
+        console.log(`=== File was successfully moved! ===`);
         break;
       case 'exit':
         console.log(`\nThank you for using File Manager, ${this.userName}, goodbye!\n`);
