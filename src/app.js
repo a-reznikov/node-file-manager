@@ -7,6 +7,7 @@ import { readFile } from './services/read.js';
 import { createFile } from './services/add.js';
 import { renameFile } from './services/rename.js';
 import { copyFileToDestination } from './services/copy.js';
+import { deleteFile } from './services/delete.js';
 
 export default class FileManager {
   constructor() {
@@ -59,6 +60,11 @@ export default class FileManager {
     const sourcePath = this.setPath(source);
     const destinationPath = this.setPath(destination);
     await copyFileToDestination(source, sourcePath, destinationPath);
+  }
+
+  async rm([path]) {
+    const pathToFile = this.setPath(path);
+    await deleteFile(pathToFile);
   }
 
   async ls() {
