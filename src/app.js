@@ -10,6 +10,7 @@ import { copyFileToDestination } from './services/copy.js';
 import { deleteFile } from './services/delete.js';
 import { getOsInfo } from './services/os.js';
 import { calculateHash } from './services/hash.js';
+import { compressFile, decompressFile } from './services/zip.js';
 
 export default class FileManager {
   constructor() {
@@ -82,6 +83,18 @@ export default class FileManager {
   async hash([path]) {
     const pathToFile = this.setPath(path);
     await calculateHash(pathToFile);
+  }
+
+  async compress([source, destination]) {
+    const sourcePath = this.setPath(source);
+    const destinationPath = this.setPath(destination);
+    await compressFile(source, sourcePath, destinationPath);
+  }
+
+  async decompress([source, destination]) {
+    const sourcePath = this.setPath(source);
+    const destinationPath = this.setPath(destination);
+    await decompressFile(source, sourcePath, destinationPath);
   }
 
   async ls() {
