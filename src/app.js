@@ -2,6 +2,7 @@ import { resolve } from 'path';
 import { readdir } from 'node:fs/promises';
 import readline from 'node:readline';
 import os from 'os';
+import { stat } from 'node:fs/promises';
 import { setUserName } from './services/cli.js'
 import { readFile } from './services/read.js';
 import { createFile } from './services/add.js';
@@ -39,8 +40,14 @@ export default class FileManager {
     }
   }
 
-  cd([path]) {
-    this.currentPath = this.setPath(path);
+  async cd([path]) {
+    const destination = this.setPath(path);
+    try {
+      await stat(destination);
+      this.currentPath = this.setPath(path);
+    } catch (error) {
+      throw new error;
+    }
   }
 
   async cat([path]) {
