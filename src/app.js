@@ -9,6 +9,7 @@ import { renameFile } from './services/rename.js';
 import { copyFileToDestination } from './services/copy.js';
 import { deleteFile } from './services/delete.js';
 import { getOsInfo } from './services/os.js';
+import { calculateHash } from './services/hash.js';
 
 export default class FileManager {
   constructor() {
@@ -76,6 +77,11 @@ export default class FileManager {
 
   async os([key]) {
     await getOsInfo(key);
+  }
+
+  async hash([path]) {
+    const pathToFile = this.setPath(path);
+    await calculateHash(pathToFile);
   }
 
   async ls() {
