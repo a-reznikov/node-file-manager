@@ -6,6 +6,7 @@ import { setUserName } from './services/cli.js'
 import { readFile } from './services/read.js';
 import { createFile } from './services/add.js';
 import { renameFile } from './services/rename.js';
+import { copyFileToDestination } from './services/copy.js';
 
 export default class FileManager {
   constructor() {
@@ -54,6 +55,11 @@ export default class FileManager {
     await renameFile(sourcePath, destinationPath);
   }
 
+  async cp([source, destination]) {
+    const sourcePath = this.setPath(source);
+    const destinationPath = this.setPath(destination);
+    await copyFileToDestination(source, sourcePath, destinationPath);
+  }
 
   async ls() {
     const listObject = await readdir(this.currentPath, { withFileTypes: true });
