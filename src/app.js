@@ -141,13 +141,12 @@ export default class FileManager {
 
     this.rl.on('line', async (line) => {
       const [command, ...args] = line.split(' ');
+      if (command === '.exit') {
+        this.message('exit');
+        process.exit(0);
+      }
 
       if (await this.isValidInput(line, command)) {
-
-        if (command === '.exit') {
-          this.message('exit');
-          process.exit(0);
-        }
 
         try {
           await this[command](args);
