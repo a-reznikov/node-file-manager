@@ -4,6 +4,7 @@ import readline from 'node:readline';
 import os from 'os';
 import { setUserName } from './services/cli.js'
 import { readFile } from './services/read.js';
+import { createFile } from './services/add.js';
 
 export default class FileManager {
   constructor() {
@@ -18,7 +19,7 @@ export default class FileManager {
   }
 
   setPath(path) {
-    return resolve(this.currentPath, ...path);
+    return resolve(this.currentPath, path);
   }
 
   async isValidInput(line, command) {
@@ -28,17 +29,22 @@ export default class FileManager {
 
   up() {
     if (this.currentPath !== this.rootDir) {
-      this.currentPath = this.setPath(['..']);
+      this.currentPath = this.setPath('..');
     }
   }
 
-  cd(path) {
+  cd([path]) {
     this.currentPath = this.setPath(path);
   }
 
-  async cat(path) {
+  async cat([path]) {
     const pathToFile = this.setPath(path);
     await readFile(pathToFile);
+  }
+
+  async add([path]) {
+    const pathToFile = this.setPath(path);
+    await createFile(pathToFile);
   }
 
   async ls() {
