@@ -8,6 +8,7 @@ import { createFile } from './services/add.js';
 import { renameFile } from './services/rename.js';
 import { copyFileToDestination } from './services/copy.js';
 import { deleteFile } from './services/delete.js';
+import { getOsInfo } from './services/os.js';
 
 export default class FileManager {
   constructor() {
@@ -71,6 +72,10 @@ export default class FileManager {
     await this.cp(path);
     await this.rm(path);
     this.message('move')
+  }
+
+  async os([key]) {
+    await getOsInfo(key);
   }
 
   async ls() {
