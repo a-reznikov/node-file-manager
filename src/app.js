@@ -43,6 +43,13 @@ export default class FileManager {
 
   async cd([path]) {
     const destination = this.setPath(path);
+
+    if (!destination.startsWith(this.rootDir)) {
+      this.currentPath = this.rootDir;
+
+      return;
+    }
+
     try {
       await stat(destination);
       this.currentPath = this.setPath(path);
