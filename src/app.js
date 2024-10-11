@@ -12,6 +12,7 @@ import { deleteFile } from './services/delete.js';
 import { getOsInfo } from './services/os.js';
 import { calculateHash } from './services/hash.js';
 import { compressFile, decompressFile } from './services/zip.js';
+import { moveFileToDestination } from './services/move.js';
 
 export default class FileManager {
   constructor() {
@@ -77,10 +78,10 @@ export default class FileManager {
     await deleteFile(pathToFile);
   }
 
-  async mv(path) {
-    await this.cp(path);
-    await this.rm(path);
-    this.message('move')
+  async mv([source, destination]) {
+    const sourcePath = this.setPath(source);
+    const destinationPath = this.setPath(destination);
+    await moveFileToDestination(source, sourcePath, destinationPath);
   }
 
   async os([key]) {
@@ -124,10 +125,7 @@ export default class FileManager {
         console.log(`Welcome to the File Manager, ${this.userName}!`);
         break;
       case 'path':
-        console.log(`You are currently in ${this.currentPath}`);
-        break;
-      case 'move':
-        console.log(`=== File was successfully moved! ===`);
+        console.log(`\nYou are currently in ${this.currentPath}`);
         break;
       case 'exit':
         console.log(`\nThank you for using File Manager, ${this.userName}, goodbye!\n`);
