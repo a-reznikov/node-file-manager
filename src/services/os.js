@@ -6,7 +6,7 @@ const processes = cpus();
 export const getOsInfo = async (key) => {
     switch (key) {
         case '--EOL':
-            console.log(`EOL: ${EOL}`);
+            console.log(`EOL: ${JSON.stringify(EOL)}`);
             break;
         case '--cpus':
             console.log(`CPUS INFO:`);
